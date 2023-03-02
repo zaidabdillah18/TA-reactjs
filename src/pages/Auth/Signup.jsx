@@ -8,10 +8,9 @@ function Signup() {
   const [nama, setNama] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [posisi, setPosisi] = useState("");
   const [alert, setAlert] = useState("");
   const url =
-    "https://febe-34-ayo-skilvul-production.up.railway.app/user/signup/";
+    "http://localhost:3000/user/register";
 
   const changeNama = (e) => {
     const value = e.target.value;
@@ -28,18 +27,15 @@ function Signup() {
     setPassword(value);
   };
 
-  const changePosisi = (e) => {
-    const value = e.target.value;
-    setPosisi(value);
-  };
+
 
   const klikDaftar = (e) => {
     e.preventDefault();
     const data = {
-      nama: nama,
+      username: nama,
       email: email,
       password: password,
-      posisi: posisi,
+    
     };
     axios.post(url, data).then((result) => {
       if (result) {
@@ -48,7 +44,7 @@ function Signup() {
           setNama("");
           setEmail("");
           setPassword("");
-          setPosisi("");
+   
           setAlert("Data Berhasil diSimpan");
           setTimeout(() => {
             setAlert("");
@@ -124,33 +120,14 @@ function Signup() {
                   required
                 />
               </div>
-              <div className="input-field">
-                <label htmlFor="" className="input-label">
-                  Posisi
-                </label>
-                <select
-                  name="posisi"
-                  id="posisi"
-                  className="select-control"
-                  value={posisi}
-                  onChange={changePosisi}
-                >
-                  <option value="pilih Posisi">Pilih Posisi</option>
-                  <option value="penyandang disabilitas lsm">
-                    Peyandang Disabilitas LSM
-                  </option>
-                  <option value="penyandang disabilitas no-lsm">
-                    Peyandang Disabilitas NON-LSM
-                  </option>
-                </select>
-              </div>
+             
               <button type="submit" className="btn-submit" onClick={klikDaftar}>
                 Buat Akun
               </button>
             </form>
             <p className="text-center">
               Sudah Punya Akun ?
-              <Link to={"/signin"} className="link-text-center">
+              <Link to={"/login"} className="link-text-center">
                 Login
               </Link>
             </p>

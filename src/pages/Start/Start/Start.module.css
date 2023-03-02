@@ -91,14 +91,26 @@
 }
 
 .mainCamera {
-  width: 300px;
-  height: 300px;
-  border: 1px solid black;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+
 }
 
 .mainTable {
   margin-top: 24px;
+}
+.mainwebcam {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+.button{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
