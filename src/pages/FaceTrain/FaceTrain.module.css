@@ -4,7 +4,13 @@
   font-size: 24px;
   color: #0f52ba;
 }
-
+.pageTitle1 {
+  margin-top: 10px;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 24px;
+  color: #0f52ba;
+}
 .breadcumbs {
   margin-top: 8px !important;
 }

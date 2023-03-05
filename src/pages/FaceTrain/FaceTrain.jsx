@@ -44,7 +44,12 @@ function FaceTrain() {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
       }
-    })
+    }).then((responce)=>(
+      setTimeout(()=>{
+        window.location.reload()
+      }, 2000)
+
+    ))
   }, [webcamRef]);
 
   if (!token) {
@@ -56,9 +61,9 @@ function FaceTrain() {
         <div className={styles.topWrapper}>
           <h2 className={styles.pageTitle}>Daftar Wajah</h2>
           <Breadcrumbs aria-label="breadcrumb" className={styles.breadcumbs}>
-            <Link className={styles.breadActive} underline="hover" color="inherit" to="/">
-              Home
-            </Link>
+          <Link className={styles.breadActive} underline="hover" color="inherit" to="/dashboard">
+                Home
+              </Link>
             <Typography className={styles.breadUnactive}>Daftar Wajah</Typography>
           </Breadcrumbs>
         </div>
@@ -90,8 +95,10 @@ function FaceTrain() {
               </>
             )}
           </div>
-          <div className={styles.mainTable}>
-          <h2 className={styles.pageTitle}>Hasil Data Wajah</h2>
+          <div className="container">
+          <div className="row">
+            <div className="card">
+          <h2 className={styles.pageTitle1}>Hasil Data Wajah</h2> <br />
             <MDBTable align='middle'>
               <MDBTableHead>
                 <tr>
@@ -127,7 +134,7 @@ function FaceTrain() {
                   <img
                         src={"data:image/jpeg;base64," + temp1.base64}
                         alt=''
-                        style={{ width: '45px', height: '45px' }}
+                        style={{ width: '70px', height: '70px' }}
                         className='rounded-circle'
                       />
                   </td>
@@ -141,8 +148,9 @@ function FaceTrain() {
                 ))}
               </MDBTableBody>
             </MDBTable>
-
-          </div>
+            </div>
+    </div>
+      </div>
         </div>
       </div>
     </DashboardLayout>  

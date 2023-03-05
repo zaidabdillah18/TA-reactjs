@@ -77,7 +77,7 @@ function DashboardSidebar() {
             )}
 
             <>
-              {location.pathname.slice(0, 10) === "/user-list" ? (
+              {location.pathname.slice(0, 10) === "/device" ? (
                 <Link to="/device" className={styles.linkSidebarActive}>
                   <img src={UserColor} alt="icon sidebar" className={styles.iconSidebar} />
                   <h5 className={styles.textColor}>Device</h5>
@@ -85,7 +85,7 @@ function DashboardSidebar() {
               ) : (
                 <Link to="/device" className={styles.linkSidebar}>
                   <img src={UserDark} alt="icon sidebar" className={styles.iconSidebar} />
-                  <h5 className={styles.text}>Device  </h5>
+                  <h5 className={styles.text}>Device</h5>
                 </Link>
               )}
             </>

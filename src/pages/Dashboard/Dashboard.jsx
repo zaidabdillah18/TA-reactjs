@@ -12,9 +12,9 @@ function Dashboard() {
         <div className={styles.topWrapper}>
           <h2 className={styles.pageTitle}>Dashboard</h2>
           <Breadcrumbs aria-label="breadcrumb" className={styles.breadcumbs}>
-            <Link className={styles.breadActive} underline="hover" color="inherit" to="/">
-              Home
-            </Link>
+          <Link className={styles.breadActive} underline="hover" color="inherit" to="/dashboard">
+                Home
+              </Link>
             <Typography className={styles.breadUnactive}>Dashbord</Typography>
           </Breadcrumbs>
         </div>

@@ -82,7 +82,7 @@ function Start() {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
         }
       }).then((responce)=>{
-        console.warn(responce.data.newface.nama)
+        console.warn(responce.data)
         setNama(responce.data.newface.nama)
         setSuhu(responce.data.newface.suhu)
         setStatus(responce.data.newface.statusSuhu)

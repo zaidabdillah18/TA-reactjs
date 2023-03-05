@@ -43,11 +43,12 @@ function Signin() {
           },
       })
       .then((res) => {
+        localStorage.setItem('Nama', res.data.data.username)
         console.warn(res.data.data.role)
           if (res.data.data.role === true) {
             navigate('/dashboardadmin')
           } else if (res.data.data.role === false){
-            navigate('/dashboard')
+            navigate('/profile')
           }
       })
   })
