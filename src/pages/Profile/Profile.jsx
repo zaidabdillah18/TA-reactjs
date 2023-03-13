@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import DashboardLayout from "../../layouts/dashboard-layout/DashboardLayout";
 import { Typography, Breadcrumbs } from "@mui/material";
 import "../../assets/css/Profile.css";
+import { format } from 'date-fns';
 import axios from "axios";
 import swal from "sweetalert";
 function Profile() {
@@ -118,14 +119,14 @@ function Profile() {
                 <div>
 
 
-                    <div className="container">
+                    <div className="container mt-4">
                         <div className="row profile">
-                            <div className="col-md-3">
+                            <div className="col-md-4">
                                 <div className="profile-sidebar">
                                     <div className="profile-userpic">
                                         <img
                                             src="https://png.pngtree.com/png-vector/20190710/ourlarge/pngtree-user-vector-avatar-png-image_1541962.jpg"
-                                            className="img-responsive justify-content-center"
+                                            className="img-responsive center-block d-block mx-auto"
                                             alt=""
                                         />
                                     </div>
@@ -180,7 +181,7 @@ function Profile() {
                 </div> */}
                                 </div>
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-8">
                                 <div className="profile-content">
 
                                     {data !=null && data.namalengkap != null ? (
@@ -211,7 +212,7 @@ function Profile() {
                                                     Tanggal Lahir
                                                 </label>
                                                 <label htmlFor="" className="form-control">
-                                                    {data.tanggallahir}
+                                                    {format(new Date(data.tanggallahir), 'dd/MM/yyyy')}
                                                 </label>
                                             </div>
                                             <div className="col-md-6">
@@ -276,7 +277,7 @@ function Profile() {
                                     ) : (<div className="row g-3">
 
                                         <h3 className="d-flex align-items-center mb-3">
-                                            Upload Data Pribadi
+                                          <b> Upload Data Pribadi </b> 
                                         </h3>
                                         <form action="" onSubmit={submit}>
                                             <div className="col-md-6">
@@ -338,6 +339,7 @@ function Profile() {
                                                     id="jeniskelamin"
                                                     value={post.jeniskelamin}
                                                     onChange={(e) => handle(e)}
+                                                    required
                                                 >
                                                     <option value={"DEFAULT"}>Pilih Jenis Kelamin</option>
                                                     <option value="Laki-laki">Laki-laki</option>
@@ -356,6 +358,7 @@ function Profile() {
                                                     name="agama"
                                                     value={post.agama}
                                                     onChange={(e) => handle(e)}
+                                                    required
                                                 >
                                                     <option value={"DEFAULT"}>Pilih salah satu..</option>
                                                     <option value="Islam">Islam</option>
@@ -410,6 +413,7 @@ function Profile() {
                                                     value={post.provinsi}
                                                     onChange={(e) => handle(e)}
                                                     placeholder={data.provinsi}
+                                                    required
                                                 >
                                                     <option value={"DEFAULT"}>Pilih Provinsi Anda</option>
                                                     {provinsi.map(region => (

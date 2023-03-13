@@ -36,7 +36,7 @@ function FaceTrain() {
   }, []);
 
   const capture = useCallback(() => {
-    const imageSrc = webcamRef.current.getScreenshot();
+    const imageSrc = webcamRef.current.getScreenshot({ width:224, height:224});
     const encodedString = imageSrc.replace(/^data:image\/(png|jpeg|jpg);base64,/, '');
     setBase64(imageSrc);
     console.log(encodedString)
@@ -51,6 +51,27 @@ function FaceTrain() {
 
     ))
   }, [webcamRef]);
+
+  const onDelete = (e, tempId) => {
+    e.preventDefault();
+    var config = {
+      method: 'delete',
+    // maxBodyLength: Infinity,
+      url: `http://localhost:3000/datawajah/deleteprofile/${tempId}`,
+      headers: { 
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      }
+    };
+    
+    axios(config)
+    .then(function (response) {
+      console.log(response.data);
+      window.location.reload()
+    })
+    .catch(function (error) {
+      console.log(error.data);
+    });
+  }
 
   if (!token) {
     return <Navigate to={"/login"} />;
@@ -109,21 +130,55 @@ function FaceTrain() {
                 </tr>
               </MDBTableHead>
               <MDBTableBody>
+                
+            {/* { data !== null &&
+              <>
+                {
+                  data.map((temp, index) => {
+                    <div key={index}>
+                    {
+                      
+                    temp.fotowajahs.map((temp1, index) => {
+                      return (
+                        <div key={index}>
+                          <tr>
+                            <td>
+                              <p className='fw-normal'>{index + 1}</p>
+                            </td>
+                            <td>
+                              <p className='fw-normal'>{temp.nama}</p>
+                            </td>
+                            <td>
+                          
+                            <img
+                                  src={"data:image/jpeg;base64," + temp1.base64}
+                                  alt=''
+                                  style={{ width: '70px', height: '70px' }}
+                                  className='rounded-circle'
+                                />
+                            </td>
+                            <td>
+                            <Button 
+                              style={{ textDecoration: 'none', color: '#29325d' }} 
+                              className="col-sm col-md-3 col-lg-3 shadow-sm border-1 border rounded-2 border-secondary px-2 mx-3 py-2 d-flex gap-2 align-items-center my-3 justify-content-center"
+                              >
+                                Delete
+                            </Button>
+                            </td>
+                          </tr>
+                        </div>
+                      )
+                    })
+                    }
+                    </div>
+                  })
+                }
+              </>
+            } */}
               { data && data.map((temp) => (
                     temp.fotowajahs.map((temp1, index)=>( 
                 <tr key={temp1.id}>
                   <td>
-                    {/* <div className='d-flex align-items-center'>
-                      <img
-                        src='https://mdbootstrap.com/img/new/avatars/8.jpg'
-                        alt=''
-                        style={{ width: '45px', height: '45px' }}
-                        className='rounded-circle'
-                      /> */}
-                      {/* <div className='ms-3'> */}
-                        {/* <p className='fw-bold mb-1'>{temp.nama}</p> */}
-                      {/* </div>
-                    </div> */}
                     <p className='fw-normal'>{index + 1}</p>
                   </td>
                   <td>
@@ -139,14 +194,54 @@ function FaceTrain() {
                       />
                   </td>
                   <td>
-                    <MDBBtn color='danger' rounded size='sm'>
+                  <Button 
+                  
+                    key ={temp.fotowajahs.id} 
+                    variant="contained" color="error"
+                    className="col-sm col-md-3 col-lg-3 shadow-sm border-1 border rounded-2 border-secondary px-2 mx-3 py-2 d-flex gap-2 align-items-center my-3 justify-content-center"
+                    onClick={(e) => onDelete(e, temp1.id)}
+                    >
                       Delete
-                    </MDBBtn>
+                  </Button>
+                  
                   </td>
                 </tr>
                 ))
                 ))}
               </MDBTableBody>
+              {/* <MDBTableBody>
+              { data && data.map((temp) => (
+                    temp.fotowajahs.map((temp1, index)=>( 
+                <tr key={temp1.id}>
+                  <td>
+                    <p className='fw-normal'>{index + 1}</p>
+                  </td>
+                  <td>
+                    <p className='fw-normal'>{temp.nama}</p>
+                  </td>
+                  <td>
+                
+                  <img
+                        src={"data:image/jpeg;base64," + temp1.base64}
+                        alt=''
+                        style={{ width: '70px', height: '70px' }}
+                        className='rounded-circle'
+                      />
+                  </td>
+                  <td>
+                  <Button 
+                    style={{ textDecoration: 'none', color: '#29325d' }} 
+                    key ={temp1.id} 
+                    className="col-sm col-md-3 col-lg-3 shadow-sm border-1 border rounded-2 border-secondary px-2 mx-3 py-2 d-flex gap-2 align-items-center my-3 justify-content-center"
+                    onClick={onDelete(temp1.id)}
+                    >
+                      Delete
+                  </Button>
+                  </td>
+                </tr>
+                ))
+                ))}
+              </MDBTableBody> */}
             </MDBTable>
             </div>
     </div>

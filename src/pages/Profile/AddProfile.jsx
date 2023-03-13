@@ -14,87 +14,131 @@ function AddProfile() {
     const nama = localStorage.getItem("Nama");
     const [data, setData] = useState("");
     const [provinsi, setProvinsi] = useState([]);
-    const [post, setpost] = useState({
-        namalengkap: "",
-        tempatlahir: "",
-        tanggallahir: "",
-        jeniskelamin: "",
-        nohp: "",
-        provinsi: "",
-        kota: "",
-        kodepos: "",
-        alamat: "",
-        agama: "",
-    });
+    const [provinsi1, setProvinsi1] = useState([]);
+    const [namalengkap, setNamalengkap] = useState("");
+    const [tempatlahir, setTempatlahir] = useState("");
+    const [tanggallahir, setTanggallahir] = useState("");
+    const [jeniskelamin, setJeniskelamin] = useState("");
+    const [nohp, setNohp] = useState("");
+    const [kota, setKota] = useState("");
+    const [kodepos, setKodepos] = useState("");
+    const [alamat, setAlamat] = useState("");
+    const [agama, setAgama] = useState("");
+
+    // const [post, setpost] = useState({
+    //     namalengkap: "",
+    //     tempatlahir: "",
+    //     tanggallahir: "",
+    //     jeniskelamin: "",
+    //     nohp: "",
+    //     provinsi: "",
+    //     kota: "",
+    //     kodepos: "",
+    //     alamat: "",
+    //     agama: "",
+    // });
+    // useEffect(() => {
+    //     const apiUrl = 'https://dev.farizdotid.com/api/daerahindonesia/provinsi';
+    //     axios.get(apiUrl)
+    //       .then(response => {
+    //         setProvinsi(response.data.provinsi);
+    //       })
+    //       .catch(error => {
+    //         console.log(error);
+    //       });
+    //   }, []);
     useEffect(() => {
-        const apiUrl = 'https://dev.farizdotid.com/api/daerahindonesia/provinsi';
-        axios.get(apiUrl)
-          .then(response => {
-            setProvinsi(response.data.provinsi);
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      }, []);
-    
-    function handle(e) {
-        const newdata = { ...post };
-        newdata[e.target.id] = e.target.value;
-        setpost(newdata);
-    }
-    function submit(e) {
-        e.preventDefault();
-        console.log(post);
-        axios.put(
-            'http://localhost:3000/datawajah/updateprofile',
-            {
-                namalengkap: post.namalengkap,
-                tempatlahir: post.tempatlahir,
-                tanggallahir: post.tanggallahir,
-                jeniskelamin: post.jeniskelamin,
-                nohp: post.nohp,
-                provinsi: post.provinsi,
-                kota: post.kota,
-                kodepos: post.kodepos,
-                alamat: post.alamat,
-                agama: post.agama,
-            },
-            {
+        axios
+            .get(`http://localhost:3000/datawajah/profile`, {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            }
-        )
-            .then((res) => {
-                setTimeout(() => {
-                    if (res.data.data[0]) {
-                        navigate('/profile')
-                    
-                    swal({
-                        title: "Login Berhasil!",
-                        icon: "success",
-                        button: "OK!",
-                    });
-                    window.location.reload()
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 }
-                }, 2000)
-             
-            });
-    }
-    useEffect(() => {
-        axios.get(`http://localhost:3000/datawajah/profile`, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
-            }
-        })
+            })
             .then((res) => {
-                console.log(res.data.data[0])
-                setData(res.data.data[0]);
+                console.log(res)
+                setNamalengkap(res.data.data[0].namalengkap)
+                setAgama(res.data.data[0].agama)
+                setAlamat(res.data.data[0].alamat)
+                setJeniskelamin(res.data.data[0].jeniskelamin)
+                setKodepos(res.data.data[0].kodepos)
+                setKota(res.data.data[0].kota)
+                setNohp(res.data.data[0].nohp)
+                setProvinsi1(res.data.data[0].provinsi1)
+                setTanggallahir(res.data.data[0].tanggallahir)
+                setTempatlahir(res.data.data[0].tempatlahir)
             })
             .catch((err) => {
                 console.log(err);
             });
     }, []);
+    // function handle(e) {
+    //     const newdata = { ...post };
+    //     newdata[e.target.id] = e.target.value;
+    //     setpost(newdata);
+    // }
+
+    const submit = () => {
+        var config = {
+            method: 'put',
+            url: 'http://localhost:3000/datawajah/updateprofile',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            },
+            data: {
+                'namalengkap': namalengkap,
+                // 'tempatlahir' : tempatlahir,
+                // 'tanggallahir' : tanggallahir,
+                // 'jeniskelamin' : jeniskelamin,
+                // 'nohp' : nohp,
+                // 'provinsi': provinsi,
+                // 'kota' : kota,
+                // 'kodepos': kodepos,
+                // 'alamat': alamat,
+                // 'agama': agama
+            }
+        };
+
+
+        axios(config)
+            .then(function (response) {
+                console.log('cok', (response));
+                swal({
+                    title: "Update Profile berhasil!",
+                    icon: "success",
+                    button: "OK!",
+                });
+                navigate('/profile')
+            })
+            .catch(function (error) {
+                console.log((error));
+            });
+        // axios.put(
+        //     'http://localhost:3000/datawajah/updateprofile',
+        //     {
+        //       data: data
+        //     },
+        //     {
+        //         headers: {
+        //             Authorization: `Bearer ${localStorage.getItem("token")}`,
+        //         },
+        //     }
+        // )
+        //     .then((res) => {
+        //         // setTimeout(() => {
+        //             // if (res.data.data[0]) {
+
+        //             swal({
+        //                 title: "Update Profile berhasil!",
+        //                 icon: "success",
+        //                 button: "OK!",
+        //             });
+        //             navigate('/profile')
+        //         // })
+        //         // }, 2000)
+
+        //     });
+    }
+
 
     const keluar = () => {
         localStorage.removeItem("token");
@@ -121,23 +165,26 @@ function AddProfile() {
                         <Typography className={styles.breadUnactive}>Profile</Typography>
                     </Breadcrumbs>
                 </div>
-                <div>
+                {/* <div> */}
 
 
-                    <div className="container">
+                    <div className="container mt-4">
                         <div className="row profile">
-                            <div className="col-md-3">
+                            <div className="col-md-4">
                                 <div className="profile-sidebar">
+                               
                                     <div className="profile-userpic">
+                                       <div className="text-center">
                                         <img
                                             src="https://png.pngtree.com/png-vector/20190710/ourlarge/pngtree-user-vector-avatar-png-image_1541962.jpg"
-                                            className="img-responsive justify-content-center"
+                                            className="img-responsive center-block"
                                             alt=""
                                         />
                                     </div>
+                                    </div>
                                     <div className="profile-usertitle">
                                         <div className="profile-usertitle-name">
-                                            {nama}
+                                          <p>{nama}</p>
                                         </div>
                                     </div>
                                     <div className="profile-usertitle">
@@ -145,6 +192,7 @@ function AddProfile() {
                                             <p>{email} </p>
                                         </div>
                                     </div>
+                                   
                                     {/* <div className="profile-usertitle">
                                     <a href="/addprofile">
                                                 <button className="btn btn-primary">Edit Profile</button>
@@ -186,9 +234,9 @@ function AddProfile() {
                 </div> */}
                                 </div>
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-8">
                                 <div className="profile-content">
-{/* 
+                                    {/* 
                                     {data.namalengkap != null ? (
                                         // data.map((temp) => (
                                         <div className="row g-3" key={data.id}>
@@ -280,28 +328,27 @@ function AddProfile() {
                                         </div>
                                         //  ))
                                     ) : (<div className="row g-3"> */}
-<div className="row g-3">
+                                    <div className="row g-3">
                                         <h3 className="d-flex align-items-center mb-3">
                                             Upload Data Pribadi
                                         </h3>
-                                        <form action="" onSubmit={submit}>
-                                            <div className="col-md-6" key={data.id}>
+                                        <div>
+                                            <div className="col-md-6" >
                                                 <label htmlFor="" className="form-label">
                                                     Nama Lengkap
                                                 </label>
                                                 <input
                                                     type="text"
+                                                    value={namalengkap}
+                                                    onChange={(e) => setNamalengkap(e.target.value)}
                                                     className="input-control"
                                                     name="namalengkap"
                                                     id="namalengkap"
-                                                    value={post.namalengkap}
-                                                    onChange={(e) => handle(e)}
-                                                    placeholder={data.namalengkap}
-                                                    autoComplete="off"
                                                     required
+
                                                 />
                                             </div>
-                                            <div className="col-md-6">
+                                            {/* <div className="col-md-6">
                                                 <label htmlFor="" className="form-label">
                                                     Tempat Lahir
                                                 </label>
@@ -310,11 +357,11 @@ function AddProfile() {
                                                     className="input-control"
                                                     name="tempatlahir"
                                                     id="tempatlahir"
-                                                    value={post.tempatlahir}
-                                                    onChange={(e) => handle(e)}
-                                                    placeholder={data.tempatlahir}
+                                                    value={tempatlahir}
+                                                    onChange={(e) => setTempatlahir(e.target.value)}
+                                                    placeholder= ""
                                                     autoComplete="off"
-                                                    required
+                                                
                                                 />
                                             </div>
                                             <div className="col-md-6">
@@ -326,13 +373,13 @@ function AddProfile() {
                                                     className="input-control"
                                                     name="tanggallahir"
                                                     id="tanggallahir"
-                                                    value={post.tanggallahir}
-                                                    onChange={(e) => handle(e)}
-                                                    placeholder={data.tanggallahir}
+                                                    value={tanggallahir}
+                                                    onChange={(e) => setTanggallahir(e.target.value)}
+                                                    placeholder=""
                                                     autoComplete="off"
-                                                    required
+                                              
                                                 />
-                                            </div>
+                                            </div> 
                                             <div className="col-md-6">
                                                 <label htmlFor="" className="form-label">
                                                     Jenis Kelamin
@@ -342,16 +389,16 @@ function AddProfile() {
                                                     className="input-control"
                                                     aria-label=".form-select-lg example"
                                                     id="jeniskelamin"
-                                                    placeholder={data.jeniskelamin}
-                                                    value={post.jeniskelamin}
-                                                    onChange={(e) => handle(e)}
+                                                    placeholder=""
+                                                    value={jeniskelamin}
+                                                    onChange={(e) => setJeniskelamin(e.target.value)}
                                                 >
                                                     <option value={"DEFAULT"}>Pilih Jenis Kelamin</option>
                                                     <option value="Laki-laki">Laki-laki</option>
                                                     <option value="Perempuan">Perempuan</option>
                                                 </select>
-                                            </div>
-                                            <div className="col-md-6">
+                                            </div> 
+                                             <div className="col-md-6">
                                                 <label htmlFor="" className="form-label">
                                                     Agama
                                                 </label>
@@ -361,9 +408,9 @@ function AddProfile() {
                                                     aria-label=".form-select-lg example"
                                                     id="agama"
                                                     name="agama"
-                                                    value={post.agama}
-                                                    onChange={(e) => handle(e)}
-                                                    placeholder={data.agama}
+                                                    value={agama}
+                                                    onChange={(e) => setAgama(e.target.value)}
+                                                    placeholder= ""
                                                 >
                                                     <option value={"DEFAULT"}>Pilih salah satu..</option>
                                                     <option value="Islam">Islam</option>
@@ -373,8 +420,8 @@ function AddProfile() {
                                                     <option value="Buddha">Buddha</option>
                                                     <option value="Konghucu">Konghucu</option>
                                                 </select>
-                                            </div>
-                                            <div className="col-md-6">
+                                            </div> 
+                                             <div className="col-md-6">
                                                 <label htmlFor="" className="form-label">
                                                     NO WA
                                                 </label>
@@ -383,11 +430,11 @@ function AddProfile() {
                                                     className="input-control"
                                                     name="nohp"
                                                     id="nohp"
-                                                    value={post.nohp}
-                                                    onChange={(e) => handle(e)}
-                                                    placeholder={data.nohp}
+                                                    value={nohp}
+                                                    onChange={(e) => setNohp(e.target.value)}
+                                                    placeholder= ""
                                                     autoComplete="off"
-                                                    required
+                                                  
                                                 />
                                             </div>
                                             <div className="col-md-6">
@@ -399,14 +446,14 @@ function AddProfile() {
                                                     className="input-control"
                                                     name="alamat"
                                                     id="alamat"
-                                                    value={post.alamat}
-                                                    onChange={(e) => handle(e)}
-                                                    placeholder={data.alamat}
+                                                    value={alamat}
+                                                    onChange={(e) => setAlamat(e.target.value)}
+                                                    placeholder= ""
                                                     autoComplete="off"
-                                                    required
+                                               
                                                 />
-                                            </div>
-                                            <div className="col-md-6">
+                                            </div> 
+                                             <div className="col-md-6">
                                                 <label htmlFor="" className="form-label">
                                                     Provinsi
                                                 </label>
@@ -415,16 +462,16 @@ function AddProfile() {
                                                     className="input-control"
                                                     aria-label=".form-select-lg example"
                                                     id="provinsi"
-                                                    value={post.provinsi}
-                                                    onChange={(e) => handle(e)}
-                                                    placeholder={data.provinsi}
+                                                    value={provinsi1}
+                                                    onChange={(e) => setProvinsi1(e.target.value)}
+                                                    placeholder= ""
                                                 >
                                                     <option value={"DEFAULT"}>Pilih Provinsi Anda</option>
                                                     {provinsi.map(region => (
                                                     <option value={region.nama}>{region.nama}</option>
                                                     ))}
                                                 </select>
-                                            </div>
+                                            </div> 
                                             <div className="col-md-6">
                                                 <label htmlFor="" className="form-label">
                                                     Kota
@@ -434,11 +481,11 @@ function AddProfile() {
                                                     className="input-control"
                                                     name="kota"
                                                     id="kota"
-                                                    value={post.kota}
-                                                    onChange={(e) => handle(e)}
-                                                    placeholder={data.kota}
+                                                    value={kota}
+                                                    onChange={(e) => setKota(e.target.value)}
+                                                    placeholder= ""
                                                     autoComplete="off"
-                                                    required
+                                                
                                                 />
                                             </div>
                                             <div className="col-md-6">
@@ -450,20 +497,20 @@ function AddProfile() {
                                                     className="input-control"
                                                     name="kodepos"
                                                     id="kodepos"
-                                                    value={post.kodepos}
-                                                    onChange={(e) => handle(e)}
-                                                    placeholder={data.kodepos}
+                                                    value={kodepos}
+                                                    onChange={(e) => setKodepos(e.target.value)}
+                                                    placeholder= ""
                                                     autoComplete="off"
-                                                    required
+                                                
                                                 />
-                                            </div>
+                                            </div> <br /> */}
                                             <div className="col-md-12">
-                                                <button type="submit" className="btn btn-primary">
+                                                <button onClick={submit} className="btn btn-primary">
                                                     <i className="glyphicon glyphicon-floppy-saved"></i>
                                                     Simpan
                                                 </button>
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -471,7 +518,7 @@ function AddProfile() {
                     </div>
 
 
-                </div>
+                {/* </div> */}
             </div>
         </DashboardLayout >
     );
