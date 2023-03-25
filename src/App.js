@@ -17,7 +17,10 @@ import TampilWajah from "./pages/Admin/TampilWajah";
 import TampilPengunjung from "./pages/Admin/TampilPengunjung";
 import TampilUser from "./pages/Admin/TampilUser";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
+import AktivasiAkun from "./pages/Auth/AktivasiAkun";
+import ResetPassword from "./pages/Auth/ResetPassword";
 import DetailUser from "./pages/Admin/DetailUser";
+import ProfileAdmin from "./pages/Admin/ProfileAdmin";
 // import TampilWajah from "./pages/Admin/TampilWajah";
 // import TampilPengunjung from "./pages/Admin/TampilWajah";
 
@@ -32,11 +35,14 @@ const App = () => {
           <Route path="/register" element={<Register />} ></Route>
           <Route path="/registeradmin" element={<RegisterAdmin />} ></Route>
           <Route path="/forgot-password" element={<ForgotPassword />} ></Route>
+          <Route path="/user/aktivasiAkun/:id" element={<AktivasiAkun />} ></Route>
+          <Route path="/user/resetpassword/:id/:token" element={<ResetPassword />} ></Route>
           <Route path="/face-train" element={<FaceTrain />} ></Route>
           <Route path="/report" element={<Report />} ></Route>
           <Route path="/start" element={<Start />} ></Route>
           <Route path="/device" element={<Device />} ></Route>
           <Route path="/profile" element={<Profile />} ></Route>
+          <Route path="/profileadmin" element={<ProfileAdmin />} ></Route>
           <Route path="/addprofile" element={<AddProfile />} ></Route>
           <Route path="/tampilwajah" element={<TampilWajah />} ></Route>
           <Route path="/tampilpengunjung" element={<TampilPengunjung />} ></Route>

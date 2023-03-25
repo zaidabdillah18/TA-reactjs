@@ -9,6 +9,7 @@ import { format } from 'date-fns';
 function TampilPengunjung() {
     const token = localStorage.getItem("token");
     const [data, setData] = useState("");
+    const [device, setDevice] = useState("");
     useEffect(() => {
         axios.get(`http://localhost:3000/admin/tampilpengunjung`, {
             headers: {
@@ -16,6 +17,8 @@ function TampilPengunjung() {
             }
         })
             .then((res) => {
+                console.log(res.data.data[0].nama)
+                setDevice(res.data.data[0])
                 // console.log(res.data.data[0].datapengunjungs)
                 setData(res.data.data[0].datapengunjungs);
             })
@@ -77,7 +80,7 @@ function TampilPengunjung() {
                                                 <td>{temp.suhu}</td>
                                                 <td>{temp.statusSuhu}</td>
                                                 <td>{format(new Date(temp.waktu), 'dd/MM/yyyy HH:mm:ss')}</td>
-                                                <td>{temp.deviceNama}</td>
+                                                <td>{device.nama}</td>
                                                 {/* <td>
                                                     <img
                                                         src={"data:image/jpeg;base64," + temp1.base64}

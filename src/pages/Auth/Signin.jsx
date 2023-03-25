@@ -24,43 +24,43 @@ function Signin() {
   };
 
   const loginbtn = (e) => {
- 
+
     e.preventDefault();
-    try{
-    axios.post(url, {email:email, password:password}).then((response) => {
-      console.warn(response.data.token)
-      localStorage.setItem('Email', email)
-      localStorage.setItem ('token', response.data.token)
-      swal({
-        title: "Login Berhasil!",
-        icon: "success",
-        button: "OK!",
-      });
-  
-      axios.get(`http://localhost:3000/user/loguser`, {
+    try {
+      axios.post(url, { email: email, password: password }).then((response) => {
+        console.warn(response.data.token)
+        localStorage.setItem('Email', email)
+        localStorage.setItem('token', response.data.token)
+        swal({
+          title: "Login Berhasil!",
+          icon: "success",
+          button: "OK!",
+        });
+
+        axios.get(`http://localhost:3000/user/loguser`, {
           headers: {
-              'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
           },
+        })
+          .then((res) => {
+            localStorage.setItem('Nama', res.data.data.username)
+            console.warn(res.data.data.role)
+            if (res.data.data.role === true) {
+              navigate('/dashboardadmin')
+            } else if (res.data.data.role === false) {
+              navigate('/profile')
+            }
+          })
       })
-      .then((res) => {
-        localStorage.setItem('Nama', res.data.data.username)
-        console.warn(res.data.data.role)
-          if (res.data.data.role === true) {
-            navigate('/dashboardadmin')
-          } else if (res.data.data.role === false){
-            navigate('/profile')
-          }
-      })
-  })
-} catch (error) {
-  console.log(error);
-  swal({
-    title: "Login Gagal!",
-    text: 'Terjadi kesalahan. Cek email atau password anda!',
-    icon: "error",
-    button: "OK"
-  });
-}
+    } catch (error) {
+      console.log(error);
+      swal({
+        title: "Login Gagal!",
+        text: 'Terjadi kesalahan. Cek email atau password anda!',
+        icon: "error",
+        button: "OK"
+      });
+    }
   };
 
   return (

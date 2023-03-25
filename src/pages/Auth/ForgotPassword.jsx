@@ -9,9 +9,6 @@ function ForgotPassword() {
   const [error, setError] = useState("");
   const [alert, setAlert] = useState("");
 
-  const url =
-    "";
-
   const changeEmail = (e) => {
     const value = e.target.value;
     setEmail(value);
@@ -24,15 +21,18 @@ function ForgotPassword() {
       setError("Email Harus Diisi");
     } else {
       axios
-        .get(url, {
+        .put('http://localhost:3000/user/forgotpassword', {
           email: email
         })
         .then(res => {
-          setEmail('')
-          setAlert('Silahakn Cek Email Anda')
+          console.log(res)
+          if(res.data.status === 201){
+         // setEmail('')
+          setAlert('Silahkan Cek Email Anda')
           setTimeout(() => {
             setAlert('')
           }, 3000)
+        }
         });
     }
   };
@@ -55,7 +55,7 @@ function ForgotPassword() {
           <div className="auth-body">
             <form action="" className="auth-form-validation">
               {alert && (
-                <div className="alert alert-danger">
+                <div className="alert alert-primary">
                   <p>{alert}</p>
                 </div>
               )}

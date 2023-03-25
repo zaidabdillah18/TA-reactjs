@@ -52,9 +52,8 @@ function Start() {
 
   const [base64, setBase64] = useState(null);
   const [data, setData] = useState("");
-  // const [nama, setNama] = useState("");
-  // const [suhu, setSuhu] = useState("");
   const [status, setStatus] = useState("");
+  const [error, setError] = useState(false);
   const webcamRef = useRef(null);
 
   const videoConstraints = {
@@ -82,18 +81,13 @@ function Start() {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
       }
     }).then((responce) => {
-      console.warn(responce.data.newface)
-      setData(responce.data.data)
-      // if (responce.data.data.status == 200) {
-      // setData(responce.data.data)
-      // }
-      // if (responce.data.datapengunjung.status == 200) {
-      //   setData(responce.data.datapengunjung)
-      // }
-      // setNama(responce.data.newface.nama)
-      // setSuhu(responce.data.newface.suhu)
-      //setStatus(responce.data.datapengunjung.status)
-
+      console.log(responce.data.status)
+      if (responce.data.status) {
+        setStatus(responce.data.status)
+        setData(responce.data.data)
+      }
+    }).catch((err) => {
+      setError(err)
     })
   }, [webcamRef]);
 
@@ -113,10 +107,22 @@ function Start() {
           </Breadcrumbs>
         </div>
         <div className={styles.main}>
+        {status === 201 ? (
           <div className={styles.mainTitle}>
             <h1 className={styles.mainTitleText}>Selamat Datang</h1>
             <h1 className={styles.mainTitleText}>Silahkan Masuk</h1>
           </div>
+        ): error ?( 
+        <div className={styles.mainTitle1}>
+          <h1 className={styles.mainTitleText}>Selamat Datang</h1>
+          <h1 className={styles.mainTitleText}>Mohon Maaf Anda Tidak Boleh Masuk Ruangan</h1>
+        </div>
+        ):(
+          <div className={styles.mainTitle}>
+            <h1 className={styles.mainTitleText}>Selamat Datang</h1>
+            <h1 className={styles.mainTitleText}>Silahkan Scan Wajah dan Suhu Anda</h1>
+          </div>
+        )}
           <div className={styles.mainCamera}>
             {base64 === null ? (
               <>
@@ -136,11 +142,11 @@ function Start() {
             ) : (
               <>
                 <img src={base64} alt="screenshot" /> <br />
-                <Button className={styles.button} onClick={() => setBase64(null)} variant="danger" component="label">Ambil Ulang</Button>
+                <Button className={styles.button} onClick={() => setBase64( window.location.reload())} variant="danger" component="label">Ambil Ulang</Button>
               </>
             )}
           </div>
-          {data.nama && base64 != null ? (
+          {status === 201 ? (
             <div>
               <div className={styles.mainDescription}>
                 <div className={styles.mainDescLeft}>{data.suhu} <span>&#8451;</span></div>
@@ -153,14 +159,14 @@ function Start() {
                 <div className={styles.mainDescLeft}>{data.nama}</div>
               </div>
             </div>
-          ) : !data.nama && base64 != null ? (
+          ) : error ? (
             <div className={styles.maineror}>
-              <div className={styles.mainDesceror}>salah woi</div>
+              <div className={styles.mainDesceror}><p>Suhu dan Wajah Anda Tidak Sesuai</p></div>
             </div>
-         ):(
-null
-         )}
-          
+          ) : (
+            null
+          )}
+
 
 
           {/* <div className={styles.mainTable}>

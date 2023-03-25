@@ -1,13 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import styles from "./DashboardNav.module.css";
 import { NavDropdown } from "react-bootstrap";
 import { Tooltip } from "antd";
 import { FaUserCircle } from "../../../assets/assets";
 import { MdNotifications } from "react-icons/md";
+import axios from "axios";
 function DashboardNav() {
+  const [data, setData] = useState("");
   const token = localStorage.getItem("token");
   const nama = localStorage.getItem("Nama");
+  useEffect(() => {
+    axios.get(`http://localhost:3000/user/loguser`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      }
+    })
+      .then((res) => {
+        console.log(res.data.data)
+        setData(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   const keluar = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("Email");
@@ -32,7 +48,12 @@ function DashboardNav() {
           <div className={styles.user}>
             <FaUserCircle className={styles.navbarAvatar} />
             <NavDropdown className={styles.dropdownContainer} title={<span className={styles.userName}>{nama}</span>}>
-              <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+              {data.role === true ? (
+           <NavDropdown.Item href="/profileadmin">Profile</NavDropdown.Item>
+              ) : (
+                <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+              )}
+             
               <NavDropdown.Divider />
               <NavDropdown.Item href="/" onClick={keluar}>Keluar</NavDropdown.Item>
             </NavDropdown>

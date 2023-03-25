@@ -5,27 +5,27 @@ import axios from "axios";
 import "../../assets/css/Sign.css";
 
 function Signup() {
-  const [nama, setNama] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [alert, setAlert] = useState("");
-  const url =
-    "http://localhost:3000/user/register";
+    const [nama, setNama] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [alert, setAlert] = useState("");
+    const url =
+      "http://localhost:3000/user/register";
 
-  const changeNama = (e) => {
-    const value = e.target.value;
-    setNama(value);
-  };
+    const changeNama = (e) => {
+      const value = e.target.value;
+      setNama(value);
+    };
 
-  const changeEmail = (e) => {
-    const value = e.target.value;
-    setEmail(value);
-  };
+    const changeEmail = (e) => {
+      const value = e.target.value;
+      setEmail(value);
+    };
 
-  const changePassword = (e) => {
-    const value = e.target.value;
-    setPassword(value);
-  };
+    const changePassword = (e) => {
+      const value = e.target.value;
+      setPassword(value);
+    };
 
 
 

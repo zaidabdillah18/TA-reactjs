@@ -44,6 +44,16 @@
   align-items: center;
   justify-content: center;
 }
+.mainTitle1 {
+  width: 350px;
+  height: 80px;
+  background-color: #ba0f0f;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
 .mainTitleText {
   font-weight: 500;
@@ -72,7 +82,7 @@
 .maineror {
   width: 350px;
   height: 80px;
-  background-color: #ff0000;
+  background-color: #ba0f0f;
   border-radius: 8px;
   display: flex;
   justify-content: center;

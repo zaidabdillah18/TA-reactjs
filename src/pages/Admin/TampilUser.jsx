@@ -86,7 +86,7 @@ function TampilUser() {
                                             <td>
                                                 <Button   variant="contained" color="success"> 
                                                  <Link to={`/detailuser/${temp.id}`} className="text-decoration-none active">
-                                                    <h6>Status Pendaftaran</h6>
+                                                    <h6>Detail User</h6>
                                                 </Link>
                                                 </Button>
                                                 <Button
