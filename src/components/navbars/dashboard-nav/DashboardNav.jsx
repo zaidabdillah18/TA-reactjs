@@ -55,7 +55,7 @@ function DashboardNav() {
               )}
              
               <NavDropdown.Divider />
-              <NavDropdown.Item href="/" onClick={keluar}>Keluar</NavDropdown.Item>
+              <NavDropdown.Item href="/login" onClick={keluar}>Keluar</NavDropdown.Item>
             </NavDropdown>
           </div>
         </div>

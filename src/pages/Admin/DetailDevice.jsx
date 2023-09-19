@@ -8,19 +8,19 @@ import Button from '@mui/material/Button';
 import axios from "axios";
 import Table from 'react-bootstrap/Table';
 import { format } from 'date-fns';
-function DetailUser() {
+function DetailDevice() {
   const params = useParams()
   const token = localStorage.getItem("token");
   const [data, setData] = useState("");
   const [post, setPost] = useState("");
   useEffect(() => {
-    axios.get(`http://localhost:3000/admin/detailuser/${params.id}`, {
+    axios.get(`http://localhost:3000/admin/detaildevice/${params.id}`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
       }
     })
       .then((res) => {
-        console.log(res.data.data1)
+        console.log(res.data.data)
         setData(res.data.data);
       })
       .catch((err) => {
@@ -42,7 +42,6 @@ function DetailUser() {
       });
   }, []);
   const onProgress = (e, id_user) => {
-
     e.preventDefault();
     // var config = {
     //   method: 'post',
@@ -81,113 +80,49 @@ function DetailUser() {
     <DashboardLayout>
       <div className={styles.wrapper}>
         <div className={styles.topWrapper}>
-          <h2 className={styles.pageTitle}>Detail User</h2>
+          <h2 className={styles.pageTitle}>Detail Device</h2>
           <Breadcrumbs aria-label="breadcrumb" className={styles.breadcumbs}>
             <Link className={styles.breadActive} underline="hover" color="inherit" to="/dashboard">
               Home
             </Link>
-            <Typography className={styles.breadUnactive}>Detail User</Typography>
+            <Typography className={styles.breadUnactive}>Detail Device</Typography>
           </Breadcrumbs>
         </div>
+
         <div className="container mt-4">
-        <div className="row">
-        <div className="col-md-6">
-          {data && data.map((temp, index) => (
-            <div className="row profile" key={temp.id}>
-              {/* <div className="col-md-6"> */}
+          {/* {data && data.map((temp, index) => ( */}
+            <div className="row profile">
+              <div className="col-md-6">
                 <div className="profile-content">
 
                   <h3 className="d-flex align-items-center mb-3">
-                    Data User
+                    Data Device
                   </h3>
+                  <Table striped bordered hover>
+                    <thead>
+                      <tr>
+                        <th>No</th>
+                        <th>Nama Device</th>
+                        <th>Status Device</th>
+                        <th>Nama User</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data && data.map((temp1, index) => (
 
-                  <div>
-                    <label htmlFor="" className="form-label">
-                      Nama Lengkap
-                    </label>
-                    <label htmlFor="" className="form-control">
-                      {temp.namalengkap}
-                    </label>
-                  </div>
-                  <div>
-                    <label htmlFor="" className="form-label">
-                      Tempat Lahir
-                    </label>
-                    <label htmlFor="" className="form-control">
-                      {temp.tempatlahir}
-                    </label>
-                  </div>
-                  <div>
-                    <label htmlFor="" className="form-label">
-                      Tanggal Lahir
-                    </label>
-                    <label htmlFor="" className="form-control">
-                      {format(new Date(temp.tanggallahir), 'dd/MM/yyyy')}
-                    </label>
-                  </div>
-                  <div>
-                    <label htmlFor="" className="form-label">
-                      Jenis Kelamin
-                    </label>
-                    <label htmlFor="" className="form-control">
-                      {temp.jeniskelamin}
-                    </label>
-                  </div>
-                  <div>
-                    <label htmlFor="" className="form-label">
-                      Agama
-                    </label>
-                    <label htmlFor="" className="form-control">
-                      {temp.agama}
-                    </label>
-                  </div>
-                  <div>
-                    <label htmlFor="" className="form-label">
-                      NO WA
-                    </label>
-                    <label htmlFor="" className="form-control">
-                      {temp.nohp}
-                    </label>
-                  </div>
-                  <div>
-                    <label htmlFor="" className="form-label">
-                      Alamat
-                    </label>
-                    <label htmlFor="" className="form-control">
-                      {temp.alamat}
-                    </label>
-                  </div>
-                  <div>
-                    <label htmlFor="" className="form-label">
-                      Provinsi
-                    </label>
-                    <label htmlFor="" className="form-control">
-                      {temp.provinsi}
-                    </label>
-                  </div>
-                  <div>
-                    <label htmlFor="" className="form-label">
-                      Kota
-                    </label>
-                    <label htmlFor="" className="form-control">
-                      {temp.kota}
-                    </label>
-                  </div>
-                  <div>
-                    <label htmlFor="" className="form-label">
-                      Kode Pos
-                    </label>
-                    <label htmlFor="" className="form-control">
-                      {temp.kodepos}
-                    </label>
-                  </div>
+                        <tr key={index + 1}>
+                          <td>{temp1.device.id}</td>
+                          <td>{temp1.device.nama}</td>
+                          <td>{temp1.device.status}</td>
+                          <td>{temp1.User.username}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+
                 </div>
-              {/* </div> */}
-            
-            </div>
-          ))}
-        </div>
-        {/* <div className="col-md-6">
+              </div>
+              <div className="col-md-6">
                 <div className="profile-content">
 
                   <h3 className="d-flex align-items-center mb-3">
@@ -211,14 +146,14 @@ function DetailUser() {
                           <td>{temp1.nama}</td>
                           <td>{temp1.status}</td>
                           <td>
-                            <Button
+                            {/* <Button
                               key={temp1.id}
                               variant="contained" color="success"
                               className="col-sm col-md-3 col-lg-3 shadow-sm border-1 border rounded-2 border-secondary px-2 mx-3 py-2 d-flex gap-2 align-items-center my-3 justify-content-center"
                               onClick={(e) => onProgress(e, temp1.id)}
                             >
                               Pilih Device
-                            </Button>
+                            </Button> */}
                             <Button variant="contained" color="success"        
                               onClick={(e) => onProgress(e, temp1.id)}>
                                 Pilih Device
@@ -230,13 +165,14 @@ function DetailUser() {
                   </Table>
 
                 </div>
-              </div> */}
               </div>
-              </div>
+            </div>
+          {/* ))} */}
+        </div>
 
       </div>
     </DashboardLayout>
   );
 }
 
-export default DetailUser;
+export default DetailDevice;

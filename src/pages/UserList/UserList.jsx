@@ -62,7 +62,7 @@ function UserList() {
           <td>{index + 1}</td>
           <td>{temp.User.username}</td>
           <td>{temp.device.nama}</td>
-          <td>{temp.status}</td>
+          <td>{temp.device.status}</td>
         </tr>
       ))}
       </tbody>

@@ -67,7 +67,7 @@ function TampilUser() {
                                     <tr>
                                         <th>No</th>
                                         <th>Email</th>
-                                        <th>Username</th>
+                                        <th>Username</th>   
                                         <th>Action</th>
                                         {/* <th>Suhu</th>
                     <th>Status Suhu</th>
@@ -86,18 +86,15 @@ function TampilUser() {
                                             <td>
                                                 <Button   variant="contained" color="success"> 
                                                  <Link to={`/detailuser/${temp.id}`} className="text-decoration-none active">
-                                                    <h6>Detail User</h6>
+                                                    <h6 className="text-light">Detail User</h6>
                                                 </Link>
                                                 </Button>
-                                                <Button
-
-                                                    key={temp.id}
-                                                    variant="contained" color="error"
-                                                    // className="col-sm col-md-3 col-lg-3 shadow-sm border-1 border rounded-2 border-secondary px-2 mx-3 py-2 d-flex gap-2 align-items-center my-3 justify-content-center"
-                                                    onClick={(e) => onDelete(e, temp.id)}
-                                                >
-                                                    Delete
+                                                <Button   variant="contained" color="success"> 
+                                                 <Link to={`/detaildevice/${temp.id}`} className="text-decoration-none active">
+                                                    <h6 className="text-light">Detail device</h6>
+                                                </Link>
                                                 </Button>
+                                             
                                             </td>
                                         </tr>
 

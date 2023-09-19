@@ -20,6 +20,7 @@ import ForgotPassword from "./pages/Auth/ForgotPassword";
 import AktivasiAkun from "./pages/Auth/AktivasiAkun";
 import ResetPassword from "./pages/Auth/ResetPassword";
 import DetailUser from "./pages/Admin/DetailUser";
+import DetailDevice from "./pages/Admin/DetailDevice";
 import ProfileAdmin from "./pages/Admin/ProfileAdmin";
 // import TampilWajah from "./pages/Admin/TampilWajah";
 // import TampilPengunjung from "./pages/Admin/TampilWajah";
@@ -48,6 +49,7 @@ const App = () => {
           <Route path="/tampilpengunjung" element={<TampilPengunjung />} ></Route>
           <Route path="/tampiluser" element={<TampilUser />} ></Route>
           <Route path="/detailuser/:id" element={<DetailUser />} ></Route>
+          <Route path="/detaildevice/:id" element={<DetailDevice />} ></Route>
         </Routes>
       </Router>
     </Suspense>

@@ -9,6 +9,7 @@ import { format } from 'date-fns';
 function Report() {
   const token = localStorage.getItem("token");
   const [data, setData] = useState("");
+  const [device, setDevice] = useState("");
   useEffect(() => {
     axios.get(`http://localhost:3000/datawajah/rekappengunjung`, {
       headers: {
@@ -16,8 +17,9 @@ function Report() {
       }
     })
       .then((res) => {
-        console.log(res.data.data)
+        console.log(res.data.data[0].device.nama)
         setData(res.data.data);
+        setDevice(res.data.data[0].device)
       })
       .catch((err) => {
         console.log(err);
@@ -49,7 +51,7 @@ function Report() {
                     <th>Gambar</th>
                     <th>Suhu</th>
                     <th>Status Suhu</th>
-                    <th>Nama   Device</th>
+                    <th>Nama Device</th>
                     <th>Waktu</th>
                   </tr>
                 </thead>
@@ -66,7 +68,7 @@ function Report() {
                       /></td>
                       <td>{temp.suhu}</td>
                       <td>{temp.statusSuhu}</td>
-                      <td>{temp.deviceNama}</td>
+                      <td>{device.nama}</td>
                       <td>{format(new Date(temp.waktu), 'dd/MM/yyyy HH:mm:ss')}</td>
                     </tr>
                   ))}

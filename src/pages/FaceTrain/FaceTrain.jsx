@@ -126,7 +126,7 @@ function FaceTrain() {
                   <th scope='col'>No</th>
                   <th scope='col'>Nama</th>
                   <th scope='col'>Gambar</th>
-                  <th scope='col'>Actions</th>
+                  <th scope='col'>Aksi</th>
                 </tr>
               </MDBTableHead>
               <MDBTableBody>

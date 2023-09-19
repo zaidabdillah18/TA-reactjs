@@ -14,6 +14,7 @@ function Profile() {
     const email = localStorage.getItem("Email");
     const nama = localStorage.getItem("Nama");
     const [provinsi, setProvinsi] = useState([]);
+    const [kota, setkota] = useState([]);
     const [data, setData] = useState("");
     const [post, setpost] = useState({
         namalengkap: "",
@@ -32,6 +33,17 @@ function Profile() {
         axios.get(apiUrl)
           .then(response => {
             setProvinsi(response.data.provinsi);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }, []);
+      useEffect(() => {
+       
+        const apiUrl ='https://alamat.thecloudalert.com/api/kabkota/get';
+        axios.get(apiUrl)
+          .then(response => {
+            setkota(response.data.result);
           })
           .catch(error => {
             console.log(error);
@@ -68,7 +80,7 @@ function Profile() {
             .then((res) => {
                 setTimeout(() => {
                     swal({
-                        title: "Login Berhasil!",
+                        title: "Data Berhasil Di Simpan!",
                         icon: "success",
                         button: "OK!",
                     });
@@ -425,7 +437,7 @@ function Profile() {
                                                 <label htmlFor="" className="form-label">
                                                     Kota
                                                 </label>
-                                                <input
+                                                {/* <input
                                                     type="text"
                                                     className="input-control"
                                                     name="kota"
@@ -435,7 +447,22 @@ function Profile() {
                                                     placeholder="Madura"
                                                     autoComplete="off"
                                                     required
-                                                />
+                                                /> */}
+                                                 <select
+                                                    defaultValue={"DEFAULT"}
+                                                    className="input-control"
+                                                    aria-label=".form-select-lg example"
+                                                    id="kota"
+                                                    value={post.kota}
+                                                    onChange={(e) => handle(e)}
+                                                    placeholder={data.kota}
+                                                    required
+                                                >
+                                                    <option value={"DEFAULT"}>Pilih Kota Anda</option>
+                                                    {kota.map(region => (
+                                                    <option value={region.text}>{region.text}</option>
+                                                    ))}
+                                                </select>
                                             </div>
                                             <div className="col-md-6">
                                                 <label htmlFor="" className="form-label">

@@ -38,43 +38,7 @@ function DashboardAdmin() {
             <Typography className={styles.breadUnactive}>Dashboard</Typography>
           </Breadcrumbs>
         </div>
-        {/* <div className="container">
-          <div className="row">
-            <div className="card mt-4">
-              <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>No</th>
-                    <th>Nama</th>
-                    <th>Gambar</th>
-                    <th>Suhu</th>
-                    <th>Status Suhu</th>
-                    <th>Nama   Device</th>
-                    <th>Waktu</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data && data.map((temp) => (
-                    <tr key={temp.id}>
-                      <td>{temp.id}</td>
-                      <td>{temp.nama}</td>
-                      <td>     <img
-                        src={"data:image/jpeg;base64," + temp.picture}
-                        alt=''
-                        style={{ width: '100px', height: '100px' }}
-                        className='rounded-circle'
-                      /></td>
-                      <td>{temp.suhu}</td>
-                      <td>{temp.statusSuhu}</td>
-                      <td>{temp.deviceNama}</td>
-                      <td>{format(new Date(temp.waktu), 'dd/MM/yyyy HH:mm:ss')}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </div>
-          </div>
-        </div> */}
+    
       </div>
     </DashboardLayout>
   );
