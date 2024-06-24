@@ -7,7 +7,9 @@ import { Space, Table, Tag } from 'antd';
 import Button from '@mui/material/Button';
 import Webcam from "react-webcam";
 import axios from "axios";
+import * as ml5 from "ml5";
 const baseURL = "http://localhost:3000/datawajah/hasilpredict";
+
 // const columns = [
 //     {
 //         title: 'Datatime',
@@ -46,8 +48,14 @@ const baseURL = "http://localhost:3000/datawajah/hasilpredict";
 //         StatusTemp: 0,
 //     },
 // ];
+const videoConstraints = {
+  width: 420,
+  height: 420,
+  facingMode: "user",
+};
 
 function Start() {
+  
   const token = localStorage.getItem("token");
 
   const [base64, setBase64] = useState(null);
@@ -55,13 +63,8 @@ function Start() {
   const [status, setStatus] = useState("");
   const [error, setError] = useState(false);
   const webcamRef = useRef(null);
-
-  const videoConstraints = {
-    width: 420,
-    height: 420,
-    facingMode: "user",
-  };
-
+  const canvasRef = useRef();
+  const { width, height } = videoConstraints;
   // useEffect(() => {
   //     const intervalId = setInterval(() => {
   //       capture();
@@ -85,11 +88,88 @@ function Start() {
       if (responce.data.status) {
         setStatus(responce.data.status)
         setData(responce.data.data)
+        setInterval(() => {
+          window.location.reload()
+        }, 20000)
       }
+      
     }).catch((err) => {
       setError(err)
     })
   }, [webcamRef]);
+  useEffect(() => {
+    let detectionInterval;
+
+    const modelLoaded = () => {
+      webcamRef.current.video.width = width;
+      webcamRef.current.video.height = height;
+      canvasRef.current.width = width;
+      canvasRef.current.height = height;
+
+
+      detectionInterval = setInterval(() => {
+        detect();
+      }, 200);
+    };
+
+    const objectDetector = ml5.objectDetector('cocossd', modelLoaded);
+
+    const detect = () => {
+      if (webcamRef.current.video.readyState !== 4) {
+        console.warn('Video not ready yet');
+        return;
+      }
+
+      objectDetector.detect(webcamRef.current.video, (err, results) => {
+        const ctx = canvasRef.current.getContext('2d');
+        ctx.clearRect(0, 0, width, height);
+      
+          results.forEach((detection) => {
+            if (results[0].label === 'person' && results[0].confidence <= 0.8984394240379333) {
+            ctx.beginPath();
+            ctx.fillStyle = "#FF0000";
+            const { label, x, y, width, height } = detection;
+            ctx.fillText(label, x, y - 5);
+            ctx.rect(x, y, width, height);
+            ctx.stroke();
+            const imageSrc = webcamRef.current.getScreenshot({ width: 224, height: 224 });
+            const encodedString = imageSrc.replace(/^data:image\/(png|jpeg|jpg);base64,/, '');
+            setBase64(imageSrc);
+        
+            axios.post(baseURL, { base64: encodedString }, {
+              headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+              }
+            }).then((responce) => {
+              console.log(responce.data.status)
+              if (responce.data.status) {
+                setStatus(responce.data.status)
+                setData(responce.data.data)
+                setInterval(() => {
+                  window.location.reload()
+                }, 10000)
+              }
+            }).catch((err) => {
+              setError(err) 
+              setStatus(null); // Mengatur status ke nilai default atau null
+              setData(null);
+              setTimeout(() => {
+                window.location.reload();
+              }, 5000); // Mengatur data ke nilai default atau null
+            })
+          }
+          });
+    
+      });
+    };
+
+    return () => {
+      if (detectionInterval) {
+        clearInterval(detectionInterval);
+      }
+    }
+
+  }, [width, height]);
 
   if (!token) {
     return <Navigate to={"/login"} />;
@@ -126,6 +206,7 @@ function Start() {
           <div className={styles.mainCamera}>
             {base64 === null ? (
               <>
+               <canvas ref={canvasRef} className="canvas"/>
                 <Webcam className={styles.mainwebcam}
                   audio={false}
                   mirrored={true}
@@ -134,7 +215,8 @@ function Start() {
                   ref={webcamRef}
                   screenshotFormat="image/jpeg"
                   videoConstraints={videoConstraints}
-                /> <br />
+                />
+                
                 <Button className={styles.button} onClick={capture} variant="contained" component="label">
                   Ambil Gambar
                 </Button>

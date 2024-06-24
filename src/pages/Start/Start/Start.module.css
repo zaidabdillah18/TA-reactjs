@@ -127,12 +127,15 @@
 .mainTable {
   margin-top: 24px;
 }
+
+
 .mainwebcam {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
+  position: absolute;
 }
 .button{
   display: flex;
